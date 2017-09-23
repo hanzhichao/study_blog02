@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'blog/css/bootstrap.min2.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/code.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/github.css' %}">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body class="bg-info">
+{% block nav %}
+        <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0px;">
+        <div class="container">
+            <div class="nav-header">
+                <div class="navbar-brand"><a href="{% url 'index' %}">My Blog</a></div>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'index' %}">首页</a></li>
+                <li><a href="{% url 'index' %}">博客</a></li>
+                <li><a href="{% url 'index' %}">关于</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 10px;">
+                <li><a href="../admin/" class="navbar-link">登录</a></li>
+            </ul>
+
+            <form class="navbar-form" action="" method="get">
+                <input class="form-control" type="text" name="q" placeholder="Search">
+            </form>
+            </div>
+        </nav>
+{% endblock %}
+{% block banner %}
+        <img class="img-responsive" src="{% static 'blog/img/banner_wide.jpg' %}">
+{% endblock %}
+{% block breadcrumb %}
+    <div class="container" style="margin-top: 20px;">
+        <ol class="breadcrumb">
+           <span>分类：</span>
+            {% for category in category_list %}
+                <a href="{% url 'category' category.id %}">{{ category }}</a>
+            {% endfor %}
+        </ol>
+    </div>
+{% endblock %}
+<div class="container" style="margin-top: 20px;">
+    {% block content %}
+        <div class="col-md-9" style="padding-left: 0px;">
+            {% block left %}{% endblock %}
+        </div>
+        <div class="col-md-3" style="padding-right: 0px;">
+        {% block right %}
+            <div class="panel panel-default">
+                <div class="panel-heading"><div class="panel-title">标签云</div></div>
+                <div class="panel-body">
+                    {% for tag in tag_list %}
+                        <a class="label label-{{ color_list | random }}" style="line-height: 24px;margin-right: 3px;" href="{% url 'tag' tag.id  %}">
+                            {{ tag }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading"><div class="panel-title">归档</div></div>
+                <div class="panel-body">
+                    {% for year,month_list in date_archive %}
+                        <ul class="nav nav-stacked">
+                            {{ year }}年
+                             {% for month in month_list %}
+                                 <li><a href="{% url 'archive' year month %}">{{ month }}月</a></li>
+                             {% endfor %}
+                        </ul>
+
+                    {% endfor %}
+                </div>
+            </div>
+        {% endblock %}
+        </div>
+
+
+    {% endblock %}
+</div>
+{% block footer %}{% endblock %}
+
+</body>
+</html>

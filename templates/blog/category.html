@@ -1,0 +1,20 @@
+{% extends "blog/base.html" %}
+{% block title %}分类{% endblock %}
+{% block left %}
+      {% for article in article_list %}
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h3>{{ article.title }}</h3></div>
+            </div>
+            <div class="panel-body">
+                {{ article.abstract }}
+            </div>
+            <div class="panel-footer">
+               <span>{{ article.last_modified_time }}</span>
+                <span class="pull-right"><a href="{% url 'article' article.id %}">阅读全文</a></span>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

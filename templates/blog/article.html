@@ -1,0 +1,16 @@
+{% extends "blog/base.html" %}
+{% block title %}文章详情{% endblock %}
+{% block left %}
+        <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h1>{{ article.title }}</h1></div>
+        </div>
+        <div class="panel-body">
+            {{ article.body |safe }}
+        </div>
+        <div class="panel-footer">
+            {{ article.last_modified_time }}</div>
+
+    </div>
+{% endblock %}
